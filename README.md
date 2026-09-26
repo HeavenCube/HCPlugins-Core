@@ -25,7 +25,7 @@ Le dépôt contient deux modules :
 Le JAR serveur est généré dans `core-plugin/build/libs/` avec la version dans son nom.
 
 En local, `gradle.properties` conserve une version SNAPSHOT de développement. Les builds de
-release CI remplacent automatiquement cette version avec `-Pversion=<numéro>`.
+release CI remplacent automatiquement cette version avec `-Pversion=AAAA.MM.JJ-bN`.
 
 ## Releases automatiques
 
@@ -33,14 +33,14 @@ Chaque build réussi de `main` passe par `HCPlugins-actions` et crée une nouvel
 GitHub auto-incrémentée :
 
 ```text
-v1 -> plugin version 1
-v2 -> plugin version 2
-v3 -> plugin version 3
+v1 -> plugin version AAAA.MM.JJ-b1
+v2 -> plugin version AAAA.MM.JJ-b2
+v3 -> plugin version AAAA.MM.JJ-b3
 ...
 ```
 
 Le JAR `HCCore-AAAA.MM.JJ-bN.jar` est joint à la release, dont le titre suit le même format.
-Le tag reste `vN` et la version du plugin est `N`. La date est calculée en UTC par la CI.
+Le tag reste `vN` et la version du plugin est `AAAA.MM.JJ-bN`. La date est calculée en UTC par la CI.
 
 Les pull requests ne créent aucune release.
 

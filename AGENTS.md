@@ -48,7 +48,7 @@ Do not move business logic from specialized plugins into Core.
 - `core-plugin` produces a versioned JAR; release builds use `HCCore-YYYY.MM.DD-bN.jar`.
 - The plugin JAR embeds the API without relocating it for joined-classpath consumers.
 - Successful `main` CI builds create numeric releases `v1`, `v2`, ... through HCPlugins-actions.
-- The generated numeric release version is passed to Gradle as `-Pversion=<n>` for the HCCore plugin release.
+- The numeric release tag determines the build number; Gradle receives `-Pversion=YYYY.MM.DD-b<n>` for the HCCore plugin release.
 - Do not manually hardcode a release version into Gradle files for CI.
 - Pull requests must build without creating releases.
 - Shared workflows use `@main` to receive HCPlugins-actions updates automatically.
