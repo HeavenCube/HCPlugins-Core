@@ -51,7 +51,7 @@ Do not move business logic from specialized plugins into Core.
 - The generated numeric release version is passed to Gradle as `-Pversion=<n>` and is also used for the Maven API publication.
 - Do not manually hardcode a release version into Gradle files for CI.
 - Pull requests must build without creating releases or publishing packages.
-- During bootstrap shared workflows may use `@main`; once stable, pin them to `@v1`.
+- Shared workflows use `@main` to receive HCPlugins-actions updates automatically.
 - Run `./gradlew build` before finalizing Java/Gradle changes.
 - Do not commit, push, rebase, reset, stash or force-update refs unless explicitly requested.
 

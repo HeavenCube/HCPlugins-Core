@@ -24,9 +24,10 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 tasks.processResources {
-    inputs.property("version", project.version)
+    val pluginVersion = project.version.toString()
+    inputs.property("version", pluginVersion)
     filesMatching("paper-plugin.yml") {
-        expand("version" to project.version)
+        expand("version" to pluginVersion)
     }
 }
 

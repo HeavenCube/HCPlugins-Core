@@ -98,5 +98,5 @@ Le dépôt consomme `HeavenCube/HCPlugins-actions`.
 - publication `core-api` : même build et même version que la release ;
 - création de release GitHub : uniquement après succès des étapes précédentes.
 
-Pendant le bootstrap, les workflows sont référencés via `@main`. Ils devront être épinglés sur
-`@v1` quand `HCPlugins-actions` sera stabilisé.
+Les workflows référencent `HCPlugins-actions` via `@main` pour recevoir automatiquement les
+corrections de la CI partagée.
