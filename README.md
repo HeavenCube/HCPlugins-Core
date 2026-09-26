@@ -16,7 +16,7 @@ Le dépôt contient deux modules :
 - La logique métier reste dans les plugins spécialisés.
 - `HCCore` est un vrai plugin installé sur le serveur.
 
-## Build
+## Build local
 
 ```bash
 ./gradlew build
@@ -24,9 +24,35 @@ Le dépôt contient deux modules :
 
 Le JAR serveur est généré dans `core-plugin/build/libs/HCCore.jar`.
 
+En local, `gradle.properties` conserve une version SNAPSHOT de développement. Les builds de
+release CI remplacent automatiquement cette version avec `-Pversion=<numéro>`.
+
+## Releases automatiques
+
+Chaque build réussi de `main` passe par `HCPlugins-actions` et crée une nouvelle release
+GitHub auto-incrémentée :
+
+```text
+v1 -> plugin version 1
+v2 -> plugin version 2
+v3 -> plugin version 3
+...
+```
+
+Le JAR `HCCore.jar` est joint à la release. Le même numéro est utilisé pour publier
+`core-api` dans GitHub Packages avant la création de la release.
+
+Les pull requests ne créent aucune release.
+
 ## API Maven
 
-Coordonnées : `fr.noltox.hcplugins:hcplugins-core-api:<version>`.
+Coordonnées :
+
+```text
+fr.noltox.hcplugins:hcplugins-core-api:<version>
+```
+
+Exemple côté plugin consommateur :
 
 ```kotlin
 repositories {
@@ -57,17 +83,20 @@ dependencies:
 
 ## Commandes
 
-`HCCore` enregistre `/hcplugins` avec l'API native Paper. Les plugins contribuent dynamiquement un module via `CoreCommandRegistry`.
+`HCCore` enregistre `/hcplugins` avec l'API native Paper. Les plugins contribuent dynamiquement
+un module via `CoreCommandRegistry`.
 
-Les raccourcis top-level propres à un plugin sont enregistrés par ce plugin via le lifecycle Paper et doivent déléguer vers la même logique métier. Le Core reste l'unique propriétaire de `/hcplugins`.
+Les raccourcis top-level propres à un plugin sont enregistrés par ce plugin via le lifecycle Paper
+et délèguent vers la même logique métier. Le Core reste l'unique propriétaire de `/hcplugins`.
 
 ## CI/CD
 
-Ce dépôt consomme les reusable workflows centralisés de
-`HeavenCube/HCPlugins-actions`.
+Le dépôt consomme `HeavenCube/HCPlugins-actions`.
 
-- `.github/workflows/build.yml` délègue le build Gradle et l'upload de `HCCore.jar`.
-- `.github/workflows/publish-api.yml` délègue la publication de `core-api` vers GitHub Packages.
+- build/tests/artifact : workflow partagé ;
+- version de release : calculée depuis les releases existantes ;
+- publication `core-api` : même build et même version que la release ;
+- création de release GitHub : uniquement après succès des étapes précédentes.
 
-Pendant la phase de bootstrap, les workflows partagés sont référencés via `@main`.
-Ils devront être épinglés sur `@v1` dès que `HCPlugins-actions` sera stabilisé.
+Pendant le bootstrap, les workflows sont référencés via `@main`. Ils devront être épinglés sur
+`@v1` quand `HCPlugins-actions` sera stabilisé.

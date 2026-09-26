@@ -1,9 +1,12 @@
-name: Publish API
+name: Publish API manually
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: Maven version to publish, for example 12.
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -14,4 +17,5 @@ jobs:
     uses: HeavenCube/HCPlugins-actions/.github/workflows/publish-maven.yml@main
     with:
       gradle-task: ":core-api:publish"
+      gradle-arguments: "--stacktrace -Pversion=${{ inputs.version }}"
     secrets: inherit
