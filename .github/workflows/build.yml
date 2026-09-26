@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  packages: write
 
 jobs:
   build:
@@ -16,5 +15,4 @@ jobs:
     with:
       project-name: HCCore
       artifact-path: core-plugin/build/libs/HCCore-*.jar
-      publish-gradle-task: ":core-api:publish"
     secrets: inherit

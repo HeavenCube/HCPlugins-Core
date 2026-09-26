@@ -4,7 +4,7 @@ Socle commun des plugins Paper de HeavenCube.
 
 Le dépôt contient deux modules :
 
-- `core-api` : contrat public minimal consommé en `compileOnly` par les autres plugins HCPlugins.
+- `core-api` : contrat public minimal compilé depuis les sources de Core par les autres plugins HCPlugins.
 - `core-plugin` : plugin serveur `HCCore`, propriétaire de la racine `/hcplugins` et des services communs.
 
 ## Principes
@@ -40,36 +40,23 @@ v3 -> plugin version 3
 ```
 
 Le JAR `HCCore-AAAA.MM.JJ-bN.jar` est joint à la release, dont le titre suit le même format.
-Le tag reste `vN` et le même numéro `N` est utilisé pour publier `core-api` dans GitHub Packages
-avant la création de la release. La date est calculée en UTC par la CI.
+Le tag reste `vN` et la version du plugin est `N`. La date est calculée en UTC par la CI.
 
 Les pull requests ne créent aucune release.
 
-## API Maven
+## Compilation avec les autres plugins
 
-Coordonnées :
+Les repositories sont clonés côte à côte en local. Le plugin consommateur ajoute
+`HCPlugins-Core` comme build composite dans `settings.gradle.kts` et dépend du projet
+`core-api` en `compileOnly`. Gradle compile alors ce module depuis ses sources, sans
+GitHub Packages. La CI des consommateurs clone la branche `main` de Core dans
+`.hcplugins/HCPlugins-Core` avant le build. Voir le
+[modèle de consommateur](https://github.com/HeavenCube/HCPlugins-actions/blob/main/docs/consumer-template.md).
+En local, le build utilise l'état actuel du clone voisin ; mettez ce clone à jour pour
+compiler contre le dernier `main` distant.
 
-```text
-fr.noltox.hcplugins:hcplugins-core-api:<version>
-```
-
-Exemple côté plugin consommateur :
-
-```kotlin
-repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/HeavenCube/HCPlugins-Core")
-        credentials {
-            username = providers.environmentVariable("GITHUB_ACTOR").orNull
-            password = providers.environmentVariable("GITHUB_TOKEN").orNull
-        }
-    }
-}
-
-dependencies {
-    compileOnly("fr.noltox.hcplugins:hcplugins-core-api:<version>")
-}
-```
+`core-api` reste un petit contrat Java nécessaire aux appels directs à HCCore ; ce n'est
+plus un package publié ni un plugin installé séparément.
 
 Dans `paper-plugin.yml` :
 
@@ -96,8 +83,7 @@ Le dépôt consomme `HeavenCube/HCPlugins-actions`.
 
 - build/tests/artifact : workflow partagé ;
 - version de release : calculée depuis les releases existantes ;
-- publication `core-api` : même build et même version que la release ;
-- création de release GitHub : uniquement après succès des étapes précédentes.
+- création de release GitHub : uniquement après succès du build et de l'upload du JAR.
 
 Les workflows référencent `HCPlugins-actions` via `@main` pour recevoir automatiquement les
 corrections de la CI partagée.
