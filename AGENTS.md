@@ -41,12 +41,14 @@ Do not move business logic from specialized plugins into Core.
 - Registration/unregistration happens on the primary server thread.
 - Core removes registrations automatically when an owner plugin disables.
 
-## Build
+## Build / CI
 
 - Keep Gradle simple; do not recreate monorepo build machinery.
 - `core-api` publishes `fr.noltox.hcplugins:hcplugins-core-api`.
 - `core-plugin` produces `HCCore.jar`.
 - The plugin JAR embeds the API without relocating it for joined-classpath consumers.
+- Shared CI logic belongs in `HeavenCube/HCPlugins-actions`; this repository should keep only thin caller workflows.
+- During bootstrap, shared workflows may use `@main`; once stable, pin them to the maintained major tag such as `@v1`.
 - Run `./gradlew build` before finalizing Java/Gradle changes.
 - Do not commit, push, rebase, reset, stash or force-update refs unless explicitly requested.
 

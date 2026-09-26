@@ -63,4 +63,11 @@ Les raccourcis top-level propres à un plugin sont enregistrés par ce plugin vi
 
 ## CI/CD
 
-Les workflows restent volontairement petits afin d'être remplacés ensuite par un toolkit partagé `HeavenCube/actions`, sur le modèle de `GroupeZ-dev/actions`.
+Ce dépôt consomme les reusable workflows centralisés de
+`HeavenCube/HCPlugins-actions`.
+
+- `.github/workflows/build.yml` délègue le build Gradle et l'upload de `HCCore.jar`.
+- `.github/workflows/publish-api.yml` délègue la publication de `core-api` vers GitHub Packages.
+
+Pendant la phase de bootstrap, les workflows partagés sont référencés via `@main`.
+Ils devront être épinglés sur `@v1` dès que `HCPlugins-actions` sera stabilisé.
