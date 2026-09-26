@@ -34,7 +34,10 @@ tasks.processResources {
 tasks.jar { enabled = false }
 
 tasks.shadowJar {
-    archiveFileName.set("HCCore.jar")
+    val buildDate = providers.gradleProperty("buildDate").orNull
+    val buildVersion = project.version.toString()
+    val fileVersion = if (buildDate == null) buildVersion else "$buildDate-b$buildVersion"
+    archiveFileName.set("HCCore-$fileVersion.jar")
     archiveClassifier.set("")
 }
 

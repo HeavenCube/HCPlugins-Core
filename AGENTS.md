@@ -45,7 +45,7 @@ Do not move business logic from specialized plugins into Core.
 
 - Keep Gradle simple; shared CI logic belongs in `HeavenCube/HCPlugins-actions`.
 - `core-api` publishes `fr.noltox.hcplugins:hcplugins-core-api`.
-- `core-plugin` produces `HCCore.jar`.
+- `core-plugin` produces a versioned JAR; release builds use `HCCore-YYYY.MM.DD-bN.jar`.
 - The plugin JAR embeds the API without relocating it for joined-classpath consumers.
 - Successful `main` CI builds create numeric releases `v1`, `v2`, ... through HCPlugins-actions.
 - The generated numeric release version is passed to Gradle as `-Pversion=<n>` and is also used for the Maven API publication.

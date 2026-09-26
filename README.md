@@ -22,7 +22,7 @@ Le dépôt contient deux modules :
 ./gradlew build
 ```
 
-Le JAR serveur est généré dans `core-plugin/build/libs/HCCore.jar`.
+Le JAR serveur est généré dans `core-plugin/build/libs/` avec la version dans son nom.
 
 En local, `gradle.properties` conserve une version SNAPSHOT de développement. Les builds de
 release CI remplacent automatiquement cette version avec `-Pversion=<numéro>`.
@@ -39,8 +39,9 @@ v3 -> plugin version 3
 ...
 ```
 
-Le JAR `HCCore.jar` est joint à la release. Le même numéro est utilisé pour publier
-`core-api` dans GitHub Packages avant la création de la release.
+Le JAR `HCCore-AAAA.MM.JJ-bN.jar` est joint à la release, dont le titre suit le même format.
+Le tag reste `vN` et le même numéro `N` est utilisé pour publier `core-api` dans GitHub Packages
+avant la création de la release. La date est calculée en UTC par la CI.
 
 Les pull requests ne créent aucune release.
 
