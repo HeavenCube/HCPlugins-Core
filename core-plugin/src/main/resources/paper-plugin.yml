@@ -1,0 +1,7 @@
+name: HCCore
+version: "${version}"
+main: fr.noltox.hcplugins.core.HCCore
+api-version: "26.2"
+description: Socle commun et registre de commandes des plugins HeavenCube.
+author: Noltox
+website: https://heavencube.fr/
