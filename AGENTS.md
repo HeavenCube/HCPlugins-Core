@@ -26,7 +26,8 @@ Do not move business logic from specialized plugins into Core.
 
 ## Public API
 
-- Keep `core-api` minimal, stable and implementation-agnostic.
+- Keep `core-api` focused on code actually shared by multiple HCPlugins plugins.
+- Shared configuration, text, permission, and glow-profile helpers may live in `core-api`; plugin-specific behavior stays with its owner.
 - Public types belong under `fr.noltox.hcplugins.core.api.*`.
 - API changes potentially affect every HCPlugins repository.
 - HCCore is exposed through Paper ServicesManager; consumers use `HCPluginsCore.require(plugin)`.

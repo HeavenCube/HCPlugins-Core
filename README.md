@@ -58,6 +58,10 @@ compiler contre le dernier `main` distant.
 `core-api` reste un petit contrat Java nécessaire aux appels directs à HCCore ; ce n'est
 plus un package publié ni un plugin installé séparément.
 
+Les utilitaires réellement partagés (chargement YAML strict, rendu MiniMessage,
+permissions dynamiques et catalogue de profils lumineux) vivent aussi dans `core-api`.
+Ils sont fournis à l'exécution par `HCCore` : les plugins consommateurs ne les embarquent pas.
+
 Dans `paper-plugin.yml` :
 
 ```yaml

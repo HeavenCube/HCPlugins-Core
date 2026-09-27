@@ -8,6 +8,7 @@ java {
 
 dependencies {
     compileOnly(libs.paperApi)
+    testImplementation(libs.paperApi)
     testImplementation(libs.junitJupiter)
     testRuntimeOnly(libs.junitPlatformLauncher)
 }
