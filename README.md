@@ -11,6 +11,14 @@ Le dépôt contient deux modules :
 - `core-api` : contrat public minimal compilé depuis les sources de Core par les autres plugins HCPlugins.
 - `core-plugin` : plugin serveur `HCCore`, propriétaire de la racine `/hcplugins` et des services communs.
 
+## Fichiers des plugins
+
+`core-api` fournit `HCPluginFiles` pour placer les fichiers sous
+`plugins/HCPlugins/`. Une configuration unique s'appelle `<NomDuPlugin>.yml`
+à la racine ; plusieurs fichiers vont dans `plugins/HCPlugins/<NomDuPlugin>/`.
+La copie des ressources par défaut ne remplace jamais un fichier déjà présent.
+HCCore et HCPlaceholdersExtra n'ont actuellement aucun fichier de configuration.
+
 ## Principes
 
 - Java 25.
