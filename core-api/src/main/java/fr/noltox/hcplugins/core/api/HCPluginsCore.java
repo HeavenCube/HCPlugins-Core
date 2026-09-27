@@ -1,6 +1,7 @@
 package fr.noltox.hcplugins.core.api;
 
 import fr.noltox.hcplugins.core.api.command.CoreCommandRegistry;
+import fr.noltox.hcplugins.core.api.message.CoreTranslations;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
@@ -23,5 +24,18 @@ public final class HCPluginsCore {
             );
         }
         return registry;
+    }
+
+    public static CoreTranslations translations(Plugin consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        CoreTranslations translations = consumer.getServer()
+                .getServicesManager()
+                .load(CoreTranslations.class);
+        if (translations == null) {
+            throw new IllegalStateException(
+                    PLUGIN_NAME + " doit fournir les traductions avant " + consumer.getName() + '.'
+            );
+        }
+        return translations;
     }
 }

@@ -17,7 +17,14 @@ Le dépôt contient deux modules :
 `plugins/HCPlugins/`. Une configuration unique s'appelle `<NomDuPlugin>.yml`
 à la racine ; plusieurs fichiers vont dans `plugins/HCPlugins/<NomDuPlugin>/`.
 La copie des ressources par défaut ne remplace jamais un fichier déjà présent.
-HCCore et HCPlaceholdersExtra n'ont actuellement aucun fichier de configuration.
+HCCore crée `plugins/HCPlugins/translations.yml` au premier démarrage. Ce fichier contient
+les messages communs (rechargement, refus d'accès aux commandes). Les placeholders `{plugin}`
+et `{duration}` sont remplacés par du texte, sans interpréter leur valeur comme du MiniMessage.
+`/hcplugins core reload` recharge les traductions sans redémarrer le serveur ; si le fichier
+est invalide, les traductions précédentes restent actives. Les messages propres à un plugin
+restent dans sa configuration. Pour un nouveau message réellement partagé, ajoutez une clé à
+ce catalogue et utilisez `HCPluginsCore.translations(plugin).render(...)` depuis le plugin.
+HCPlaceholdersExtra n'a pas de fichier de configuration.
 
 ## Principes
 

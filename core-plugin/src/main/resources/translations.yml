@@ -1,0 +1,9 @@
+# Messages partagés par HCCore et les plugins HeavenCube.
+# {plugin} est le nom du plugin ; {duration} est le temps du rechargement.
+reload:
+  success: "<green>Le plugin <white>{plugin}</white> a été rechargé en <white>{duration}</white> !</green>"
+  failure: "<red>Le rechargement de <white>{plugin}</white> a échoué. La configuration précédente reste active. Consultez la console.</red>"
+command:
+  operator-only: "<red>Cette commande est réservée aux opérateurs.</red>"
+  players-only: "<red>Cette commande doit être exécutée par un joueur.</red>"
+  no-permission: "<red>Vous n'avez pas la permission d'effectuer cette action.</red>"
