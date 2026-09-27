@@ -2,6 +2,10 @@
 
 Socle commun des plugins Paper de HeavenCube.
 
+**Licence :** code source consultable et contributions bienvenues, mais usage
+réservé aux serveurs HeavenCube. Toute réutilisation ou distribution exige une
+autorisation écrite préalable. Voir [LICENSE](LICENSE).
+
 Le dépôt contient deux modules :
 
 - `core-api` : contrat public minimal compilé depuis les sources de Core par les autres plugins HCPlugins.
