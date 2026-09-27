@@ -3,8 +3,8 @@ package fr.noltox.hcplugins.core.api.message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /** Server-wide messages owned by HCCore and configured in plugins/HCPlugins/translations.yml. */
 public interface CoreTranslations {
@@ -16,7 +16,7 @@ public interface CoreTranslations {
     }
 
     default Component reloadSuccess(Plugin plugin, long elapsedNanos) {
-        String duration = String.format(Locale.FRANCE, "%.2f s", Math.max(0L, elapsedNanos) / 1_000_000_000.0);
+        String duration = TimeUnit.NANOSECONDS.toMillis(Math.max(0L, elapsedNanos)) + "ms";
         return render("reload.success", Map.of("plugin", plugin.getName(), "duration", duration));
     }
 

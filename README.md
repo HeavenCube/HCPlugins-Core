@@ -20,6 +20,7 @@ La copie des ressources par défaut ne remplace jamais un fichier déjà présen
 HCCore crée `plugins/HCPlugins/translations.yml` au premier démarrage. Ce fichier contient
 les messages communs (rechargement, refus d'accès aux commandes). Les placeholders `{plugin}`
 et `{duration}` sont remplacés par du texte, sans interpréter leur valeur comme du MiniMessage.
+La durée de rechargement s'affiche en millisecondes entières, par exemple `250ms`.
 `/hcplugins core reload` recharge les traductions sans redémarrer le serveur ; si le fichier
 est invalide, les traductions précédentes restent actives. Les messages propres à un plugin
 restent dans sa configuration. Pour un nouveau message réellement partagé, ajoutez une clé à

@@ -1,5 +1,5 @@
 # Messages partagés par HCCore et les plugins HeavenCube.
-# {plugin} est le nom du plugin ; {duration} est le temps du rechargement.
+# {plugin} est le nom du plugin ; {duration} est le temps du rechargement en millisecondes (ex. 250ms).
 reload:
   success: "<green>Le plugin <white>{plugin}</white> a été rechargé en <white>{duration}</white> !</green>"
   failure: "<red>Le rechargement de <white>{plugin}</white> a échoué. La configuration précédente reste active. Consultez la console.</red>"

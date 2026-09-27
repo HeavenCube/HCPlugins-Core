@@ -36,9 +36,11 @@ class YamlCoreTranslationsTest {
     void placeholdersRenderAsTextAndChangedTranslationsReload() throws Exception {
         YamlCoreTranslations translations = new YamlCoreTranslations(plugin());
         translations.reload();
-        assertEquals("Le plugin <red>Exemple a été rechargé en 0,25 s !",
+        assertEquals("Le plugin <red>Exemple a été rechargé en 250ms !",
                 plain(translations.render("reload.success",
-                        Map.of("plugin", "<red>Exemple", "duration", "0,25 s"))));
+                        Map.of("plugin", "<red>Exemple", "duration", "250ms"))));
+        assertEquals("Le plugin HCCore a été rechargé en 250ms !",
+                plain(translations.reloadSuccess(plugin(), 250_000_000L)));
 
         Path file = directory.resolve("plugins/HCPlugins/translations.yml");
         Files.writeString(file, Files.readString(file).replace(
