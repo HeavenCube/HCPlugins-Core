@@ -111,3 +111,16 @@ Le dépôt consomme `HeavenCube/HCPlugins-actions`.
 
 Les workflows référencent `HCPlugins-actions` via `@main` pour recevoir automatiquement les
 corrections de la CI partagée.
+
+
+## Documentation de maintenance
+
+- [AGENTS.md](AGENTS.md) : règles communes pour les IA, lecture ciblée et restitution concise.
+- [Architecture de la suite](docs/ECOSYSTEM.md) : dépendances, Java/Paper, threads, fichiers et CI.
+- [Guide du Core](docs/TECHNICAL.md) : catalogue des API et lifecycle des services.
+- [Créer un plugin](docs/NEW_PLUGIN.md) : base Gradle/Paper/Java, configuration et validations.
+- [Passage entre IA et lectures ciblées](docs/AI_HANDOFF.md) : routage et résumé de reprise.
+
+Tous les plugins spécialisés exigent HCCore ; inspecter son API avant toute modification technique.
+Les fonctions réellement dupliquées se développent d'abord dans Core, puis chez les consommateurs.
+Les points d'entrée CLAUDE.md et GEMINI.md renvoient au même AGENTS, sans copie des règles.

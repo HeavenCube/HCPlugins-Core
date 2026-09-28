@@ -1,63 +1,51 @@
-# HCPlugins-Core
+# Instructions — HCPlugins-Core
 
-## Scope
+## Démarrage et lecture ciblée
 
-This repository contains the shared HeavenCube Paper core only:
-- `core-api`: public compile-time contract for HCPlugins.
-- `core-plugin`: HCCore server runtime.
+1. Lire ce fichier et `git status --short`, puis la section utile de [docs/TECHNICAL.md](docs/TECHNICAL.md).
+2. [docs/ECOSYSTEM.md](docs/ECOSYSTEM.md) : règles communes et dépendances ;
+   [docs/NEW_PLUGIN.md](docs/NEW_PLUGIN.md) : création d'un consommateur ;
+   [docs/AI_HANDOFF.md](docs/AI_HANDOFF.md) : routage des lectures et transfert. Lire selon la tâche.
+3. Avant une API commune, rechercher ses usages dans les clones voisins ; inspecter contrats et tests ciblés.
 
-Do not move business logic from specialized plugins into Core.
+## Contrat du Core
 
-## Java / Paper
+- `core-api` contient contrats/helpers partagés ; `core-plugin` est HCCore, runtime propriétaire.
+  `core-api` ne dépend jamais de `core-plugin` ni des plugins spécialisés.
+- Tous les plugins spécialisés exigent HCCore. Leur API Core est compileOnly via build composite ;
+  HCCore seul l'embarque sans relocation. Pas de publication Maven/GitHub Packages.
+- Réutiliser Core et extraire les fonctionnalités réellement dupliquées dans Core avant les consommateurs.
+  Garder le métier chez son propriétaire ; ne pas centraliser GUI/paquets/données d'un unique plugin.
+- Java 25 sans preview, toolchain/release 25 ; conserver Paper déclaré (26.2 actuellement).
+  Vérifier signatures réelles et utiliser les APIs publiques Paper modernes et Adventure.
+- Records, pattern matching, switch expressions et snapshots immuables lorsque lisibles ; aucune
+  micro-optimisation sans mesure. Virtual threads pour I/O indépendantes, jamais pour état Bukkit.
+- Pas de NMS/CraftBukkit/réflexion maison ni dépendance lourde sans nécessité et accord explicite.
+- HCCore seul possède `/hcplugins`. Registre muté sur thread serveur ; handles closeables/idempotents.
+  Retrait automatique des modules au disable du propriétaire et fermeture des services au disable Core.
+- Traductions via ServicesManager ; `plugins/HCPlugins/translations.yml`, reload atomique.
+  `{duration}` inclut `ms`. Valeurs interpolées comme texte ; préserver la protection MiniMessage.
+- Préserver helpers YAML/fichiers/permissions et profils lumineux. Changement de carrier : auditer
+  Glowing, ItemFrame et HCPack-CustomGlowing ensemble avant modification.
+- API compatible en priorité ; rupture : adapter/tester les consommateurs et expliquer l'ordre de déploiement.
 
-- Java 25 only; no preview features.
-- Target the current Paper 26.2 API declared by this repository.
-- Prefer supported Paper APIs over Bukkit legacy APIs when useful.
-- No NMS, CraftBukkit internals or reflection.
-- Paper game state stays on an allowed server thread.
-- Virtual threads are only for suitable independent blocking I/O, never Bukkit/Paper state.
+## Validation et Git
 
-## Dependencies
+- Après Java/Gradle : `./gradlew build` ou `.\gradlew.bat build` avec JDK 25, puis consommateurs affectés.
+  Contrôler le JAR si packaging modifié ; ne pas masquer une erreur ou désactiver une vérification.
+- Docs seules : liens/chemins/faits et `git diff --check` ; pas de build coûteux sans risque concret.
+- Gradle/CI réussis ne prouvent pas le comportement en jeu. Indiquer les scénarios non vérifiés.
+- Conserver workflow partagé `@main`, version/JAR `AAAA.MM.JJ-bN`, tags numériques et licence HeavenCube.
+- Pas de commit/push/reset/rebase/stash/changement de branche/release/déploiement sans autorisation explicite.
+  Une autorisation de session compte ; préserver les changements d'autres intervenants.
 
-- Keep the runtime dependency surface minimal.
-- Server-provided APIs are `compileOnly`.
-- Do not add an abstraction when Paper already provides a reasonable supported API.
-- `core-api` must never depend on `core-plugin`.
+## Coût de contexte et handoff
 
-## Public API
-
-- Keep `core-api` focused on code actually shared by multiple HCPlugins plugins.
-- Shared configuration, text, permission, and glow-profile helpers may live in `core-api`; plugin-specific behavior stays with its owner.
-- Public types belong under `fr.noltox.hcplugins.core.api.*`.
-- API changes potentially affect every HCPlugins repository.
-- HCCore is exposed through Paper ServicesManager; consumers use `HCPluginsCore.require(plugin)`.
-- Registration handles are idempotent and closeable.
-
-## Commands
-
-- HCCore alone owns `/hcplugins`.
-- Modules register through `CoreCommandRegistry`.
-- Use Paper's native command API; no command framework without explicit approval.
-- Plugin-specific top-level shortcuts belong to each consuming plugin and delegate to the same logic.
-- Registration/unregistration happens on the primary server thread.
-- Core removes registrations automatically when an owner plugin disables.
-
-## Build / CI / releases
-
-- Keep Gradle simple; shared CI logic belongs in `HeavenCube/HCPlugins-actions`.
-- `core-api` is compiled from this repository's source through Gradle composite builds; CI consumers check out `main`. Do not publish it to Maven.
-- `core-plugin` produces a versioned JAR; release builds use `HCCore-YYYY.MM.DD-bN.jar`.
-- The plugin JAR embeds the API without relocating it for joined-classpath consumers.
-- Successful `main` CI builds create numeric releases `v1`, `v2`, ... through HCPlugins-actions.
-- The numeric release tag determines the build number; Gradle receives `-Pversion=YYYY.MM.DD-b<n>` for the HCCore plugin release.
-- Do not manually hardcode a release version into Gradle files for CI.
-- Pull requests must build without creating releases.
-- Shared workflows use `@main` to receive HCPlugins-actions updates automatically.
-- Run `./gradlew build` before finalizing Java/Gradle changes.
-- Do not commit, push, rebase, reset, stash or force-update refs unless explicitly requested.
-
-## Style
-
-- Prefer small immutable types, explicit ownership and simple control flow.
-- Avoid speculative abstractions and generic helper dumping grounds.
-- Tests protect contracts, lifecycle, validation and regressions.
+- Rechercher avec `rg` dans la zone utile ; regrouper lectures indépendantes, limiter sortie/logs.
+  Ne pas relire tous les guides ou scanner build/.gradle. Réutiliser les faits déjà vérifiés.
+- Changement minimal cohérent ; pas de refactoring cosmétique ni tests recopiant l'implémentation.
+- Pas de sous-agents sans demande/instruction applicable. Clarifier seulement une donnée bloquante.
+- Maintenir les guides lorsque le contrat change ; CLAUDE.md/GEMINI.md ne dupliquent pas ces règles.
+- Restitution française courte : changement, validation exacte, limite/action restante.
+  Pour handoff : objectif, fichiers/commits Core et consommateurs, tests, blocage/prochaine action.
+  Aucun secret ni mémoire persistante créée sans demande.
