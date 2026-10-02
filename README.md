@@ -11,6 +11,29 @@ Le dépôt contient deux modules :
 - `core-api` : contrat public minimal compilé depuis les sources de Core par les autres plugins HCPlugins.
 - `core-plugin` : plugin serveur `HCCore`, propriétaire de la racine `/hcplugins` et des services communs.
 
+## Ecosystème HCPlugins
+
+Repositories de plugins existants :
+
+- [HCPlugins-Core](https://github.com/HeavenCube/HCPlugins-Core) : socle commun et plugin serveur `HCCore`.
+- [HCPlugins-AdvancementsRedirect](https://github.com/HeavenCube/HCPlugins-AdvancementsRedirect) : redirection de l'onglet Progrès vers une commande serveur.
+- [HCPlugins-Glowing](https://github.com/HeavenCube/HCPlugins-Glowing) : profils de glow vanilla et sélection joueur.
+- [HCPlugins-HuskHomesGUI](https://github.com/HeavenCube/HCPlugins-HuskHomesGUI) : interface Paper pour HuskHomes.
+- [HCPlugins-ItemFrame](https://github.com/HeavenCube/HCPlugins-ItemFrame) : cadres invisibles et contours custom.
+- [HCPlugins-JoinMessage](https://github.com/HeavenCube/HCPlugins-JoinMessage) : messages de connexion et de déconnexion.
+- [HCPlugins-PlaceholdersExtra](https://github.com/HeavenCube/HCPlugins-PlaceholdersExtra) : expansion PlaceholderAPI `hcextra`.
+
+Repositories partagés :
+
+- [HCPlugins-actions](https://github.com/HeavenCube/HCPlugins-actions) : workflows GitHub Actions réutilisables par les plugins.
+- [HCPack-CustomGlowing](https://github.com/HeavenCube/HCPack-CustomGlowing) : resource pack Nexo des shaders de glow custom.
+
+Prochains plugins :
+
+- Créer chaque nouveau plugin dans un dépôt `HeavenCube/HCPlugins-<Nom>`.
+- Ajouter son lien dans cette section et dans les README des plugins existants dès la création du dépôt.
+- Garder HCCore obligatoire côté serveur et réutiliser ses services avant de dupliquer une fonctionnalité commune.
+
 ## Fichiers des plugins
 
 `core-api` fournit `HCPluginFiles` pour placer les fichiers sous
