@@ -19,7 +19,7 @@ historique Git ne doivent pas être recopiés dans les nouveaux dépôts.
 La source des dépendances installées est `paper-plugin.yml`. `compileOnly` décrit le classpath
 de compilation, pas à lui seul l'ordre de chargement serveur. HCCore est obligatoire pour les
 six plugins spécialisés ; aucun plugin ne doit embarquer une deuxième copie de `core-api`.
-`HCPlugins-actions` fournit la CI. `HCPack-CustomGlowing` fournit les assets client, installés
+`HCPlugins-actions` fournit la CI. `HCPack-CustomAssets` fournit les assets client, installés
 séparément via Nexo. Ce sont des dépôts d'infrastructure, pas des plugins Paper.
 
 ## Core d'abord, plugins légers

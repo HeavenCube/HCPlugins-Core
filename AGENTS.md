@@ -26,7 +26,7 @@
 - Traductions via ServicesManager ; `plugins/HCPlugins/translations.yml`, reload atomique.
   `{duration}` inclut `ms`. Valeurs interpolées comme texte ; préserver la protection MiniMessage.
 - Préserver helpers YAML/fichiers/permissions et profils lumineux. Changement de carrier : auditer
-  Glowing, ItemFrame et HCPack-CustomGlowing ensemble avant modification.
+  Glowing, ItemFrame et HCPack-CustomAssets ensemble avant modification.
 - API compatible en priorité ; rupture : adapter/tester les consommateurs et expliquer l'ordre de déploiement.
 
 ## Validation et Git
